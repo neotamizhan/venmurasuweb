@@ -12,7 +12,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap_slate.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
@@ -25,23 +25,36 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <h1>Hello</h1>
     <div class="container" ng-controller="MainCtrl">    
 
-<div class="btn-group" ng-repeat="novel in novelsWithSections">
-  <button type="button" class="btn btn-success" ng-click="fetchAllEpisodes(novel.novel)">{{novel.novel.name}}</button>
-  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-    <span class="caret"></span>
-    <span class="sr-only"></span>
-  </button>
-  <ul class="dropdown-menu" role="menu">
-    <li><a href="#" ng-click="fetchAllEpisodes(novel.novel)">எல்லா அத்தியாயங்களும்</a></li>
-    <li><a href="#" ng-repeat="section in novel.sections" ng-click="fetchEpisodes(section)">{{section.id}}. {{section.name}}</a></li>
-  </ul>
-</div>
+    <div class="page-header">
+      <h1>வெண்முரசு <small> ஜெயமோகன்</small></h1>
+    </div>
 
-      <!--button ng-click="fetchEpisodes()" class="btn btn-large btn-success">Load Data</button--> 
-      <button ng-click="orderEpisodes('a')">அ-ஃ</button> <button ng-click="orderEpisodes('d')">ஃ - அ</button>
+    <div class="btn-group" ng-repeat="novel in novelsWithSections">
+      <button type="button" class="btn btn-success" ng-click="fetchAllEpisodes(novel.novel)">{{novel.novel.name}}</button>
+      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+        <span class="sr-only"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#" ng-click="fetchAllEpisodes(novel.novel)">எல்லா அத்தியாயங்களும்</a></li>
+        <li><a href="#" ng-repeat="section in novel.sections" ng-click="fetchEpisodes(section)">{{section.id}}. {{section.name}}</a></li>
+      </ul>
+    </div>
+
+    <div class="btn-group" ng-show="episodes">
+      <button type="button" class="btn btn-success" ng-click="fetchAllEpisodes(novel.novel)">வரிசை</button>
+      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+        <span class="sr-only"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#" ng-click="orderEpisodes('a')">அ  -  ஃ</a></li>
+        <li><a href="#" ng-click="orderEpisodes('d')">ஃ  -  அ</a></li>
+      </ul>
+    </div>    
+            
 
       <div class="episodes" ng-show="episodes">
        <div class="col-sm-6 col-md-4" ng-repeat="episode in episodes">
@@ -71,7 +84,7 @@
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
-
+    
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/jquery.js"></script>
@@ -80,11 +93,10 @@
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/linqjs/linq.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>    
     <!-- endbower -->
     <!-- endbuild -->
-
+    <script src="bower_components/linqjs/linq.js"></script>
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>

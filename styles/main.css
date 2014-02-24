@@ -77,3 +77,11 @@ body {
     border-bottom: 0;
   }
 }
+
+.btn-group {
+  padding-right: 30px;
+}
+
+.episodes {
+  margin-top: 50px;
+}

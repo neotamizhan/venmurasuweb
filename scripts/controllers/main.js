@@ -54,6 +54,7 @@ angular.module('venmurasuwebApp')
                 .orderByDescending("$.chapter")
                 .toArray();     
     }
+    
 
     /********** Setters *********/
 
@@ -65,7 +66,6 @@ angular.module('venmurasuwebApp')
 
     $scope.fetchNovelsWithSections = function () {
       $scope.novelsWithSections = [];
-
       
       for (var i = 0; i < $scope.novels.length; i++) {
         var novelWithSections = {};
