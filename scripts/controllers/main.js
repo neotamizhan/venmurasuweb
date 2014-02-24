@@ -18,7 +18,8 @@ angular.module('venmurasuwebApp')
   		$http.get(url).then(function (response) { 
         $scope.db = response.data; 
         $scope.fetchNovels();   
-        $scope.fetchNovelsWithSections();           
+        $scope.fetchNovelsWithSections();       
+        $scope.fetchLatestEpisode();    
       });
   	}
 
@@ -56,9 +57,21 @@ angular.module('venmurasuwebApp')
     }
     
 
+    var getLatestEpisode = function () {      
+      var e = [];
+      e.push($scope.db[$scope.db.length - 1]);
+      return e;
+    }
+
     /********** Setters *********/
 
+    $scope.fetchLatestEpisode = function () {
+      $scope.episodes = getLatestEpisode();
+    }
 
+    $scope.clearEpisodes = function () {
+      $scope.episodes = [];
+    }
 
     $scope.fetchNovels = function () {
         $scope.novels = getNovels();
