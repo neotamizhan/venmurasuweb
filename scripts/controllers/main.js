@@ -10,6 +10,7 @@ angular.module('venmurasuwebApp')
   	$scope.sections = [];
   	$scope.novels = [];
     $scope.novelsWithSections = [];
+    $scope.allTags = [];
 
   	$scope.message = "Test Message";
 
@@ -20,6 +21,7 @@ angular.module('venmurasuwebApp')
         $scope.fetchNovels();   
         $scope.fetchNovelsWithSections();       
         $scope.fetchLatestEpisode();    
+        $scope.setAllTags();
       });
   	}
 
@@ -27,8 +29,14 @@ angular.module('venmurasuwebApp')
     /*****/
     // Getters 
 
-    var searchByTag = function (tag) {
-      
+    var getAllTags = function () {
+      var alltags = [];
+
+      Enumerable.from($scope.db)
+                .select(function (x) { return x.tags; })
+                .forEach(function(i) { for(var a=0;a<i.length; a++) {alltags.push (i[a]); } });
+
+      return $.unique(alltags);
     }
 
     var getNovels = function () {
@@ -67,7 +75,15 @@ angular.module('venmurasuwebApp')
       return e;
     }
 
+    var getAllTags = function () {
+      
+    }
+
     /********** Setters *********/
+
+    $scope.setAllTags = function () {
+      $scope.allTags = getAllTags();
+    }
 
     $scope.fetchLatestEpisode = function () {      
       $scope.episodes = getLatestEpisode();

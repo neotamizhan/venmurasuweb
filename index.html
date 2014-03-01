@@ -26,63 +26,70 @@
 
     <!-- Add your site or application content here -->
     <div class="container" ng-controller="MainCtrl">    
-
-    <div class="page-header">
+     <div class="page-header">
       <h1>வெண்முரசு <small> ஜெயமோகன்</small></h1>
     </div>
+    <div class="row">
+      <div class="col-md-12">           
+        <div class="btn-group" ng-repeat="novel in novelsWithSections">
+          <button type="button" class="btn btn-success" ng-click="fetchAllEpisodes(novel.novel)">{{novel.novel.name}}</button>
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" ng-click="fetchAllEpisodes(novel.novel)">எல்லா அத்தியாயங்களும்</a></li>
+            <li><a href="#" ng-repeat="section in novel.sections" ng-click="fetchEpisodes(section)">{{section.id}}. {{section.name}}</a></li>
+          </ul>
+        </div>
 
-    <div class="btn-group" ng-repeat="novel in novelsWithSections">
-      <button type="button" class="btn btn-success" ng-click="fetchAllEpisodes(novel.novel)">{{novel.novel.name}}</button>
-      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-        <span class="caret"></span>
-        <span class="sr-only"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="#" ng-click="fetchAllEpisodes(novel.novel)">எல்லா அத்தியாயங்களும்</a></li>
-        <li><a href="#" ng-repeat="section in novel.sections" ng-click="fetchEpisodes(section)">{{section.id}}. {{section.name}}</a></li>
-      </ul>
-    </div>
+        <div class="btn-group" ng-show="episodes.length > 1">
+          <button type="button" class="btn btn-success">வரிசை</button>
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" ng-click="orderEpisodes('a')">அ  -  ஃ</a></li>
+            <li><a href="#" ng-click="orderEpisodes('d')">ஃ  -  அ</a></li>
+          </ul>
+        </div>    
 
-    <div class="btn-group" ng-show="episodes.length > 1">
-      <button type="button" class="btn btn-success">வரிசை</button>
-      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-        <span class="caret"></span>
-        <span class="sr-only"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="#" ng-click="orderEpisodes('a')">அ  -  ஃ</a></li>
-        <li><a href="#" ng-click="orderEpisodes('d')">ஃ  -  அ</a></li>
-      </ul>
-    </div>    
-
-    <div class="btn-group" ng-show="episodes">
-      <button type="button" class="btn btn-success">பிற</button>
-      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-        <span class="caret"></span>
-        <span class="sr-only"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="#" ng-click="clearEpisodes()">Clear</a></li>
-        <li><a href="#" ng-click="fetchLatestEpisode()">புதிய அத்தியாயம்</a></li>
-      </ul>
-    </div>                
+        <div class="btn-group" ng-show="episodes">
+          <button type="button" class="btn btn-success">பிற</button>
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" ng-click="clearEpisodes()">Clear</a></li>
+            <li><a href="#" ng-click="fetchLatestEpisode()">புதிய அத்தியாயம்</a></li>
+          </ul>
+        </div>                
 
 
-      <div class="alert alert-success alert-dismissable" ng-show="message">
-        {{message}}
+          <div class="alert alert-success alert-dismissable" ng-show="message">
+            {{message}}
+          </div>
+
+          <div class="episodes" ng-show="episodes">
+           <div class="col-sm-6 col-md-4" ng-repeat="episode in episodes">
+              <div class="thumbnail">
+                <img src="{{episode.image}}" alt="...">
+                <div class="caption">
+                  <h3>{{episode.sectionname}} - {{episode.chapter}}</h3>
+                  <p><a href="{{episode.url}}" target="_blank" class="btn btn-primary" role="button">கதை</a> <a href="{{episode.image}}" target="_blank" class="btn btn-default" role="button">படம்</a></p>
+                </div>
+              </div>
+            </div>        
+          </div>  
       </div>
 
-      <div class="episodes" ng-show="episodes">
-       <div class="col-sm-6 col-md-4" ng-repeat="episode in episodes">
-          <div class="thumbnail">
-            <img src="{{episode.image}}" alt="...">
-            <div class="caption">
-              <h3>{{episode.sectionname}} - {{episode.chapter}}</h3>
-              <p><a href="{{episode.url}}" target="_blank" class="btn btn-primary" role="button">கதை</a> <a href="{{episode.image}}" target="_blank" class="btn btn-default" role="button">படம்</a></p>
-            </div>
-          </div>
-        </div>        
-      </div>    
+      <div class="col-md-4">
+        <a class="tag" ng-repeat="tag in allTags">{{tag}}</a>
+      </div>
+    </div>  
+
     </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
