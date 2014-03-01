@@ -43,6 +43,17 @@
           </ul>
         </div>
 
+        <div class="btn-group" ng-show="allTags">
+          <button type="button" class="btn btn-success">குறிச்சொற்கள்</button>
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" ng-click="fetchByTag(tag)" ng-repeat="tag in allTags">{{tag}}</a></li>          
+          </ul>
+        </div>  
+
         <div class="btn-group" ng-show="episodes.length > 1">
           <button type="button" class="btn btn-success">வரிசை</button>
           <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
@@ -77,16 +88,13 @@
               <div class="thumbnail">
                 <img src="{{episode.image}}" alt="...">
                 <div class="caption">
-                  <h3>{{episode.sectionname}} - {{episode.chapter}}</h3>
+                  <p>{{episode.novelname}} - {{episode.chapter}}</p>
+                  <p>{{episode.sectionname}}</p>
                   <p><a href="{{episode.url}}" target="_blank" class="btn btn-primary" role="button">கதை</a> <a href="{{episode.image}}" target="_blank" class="btn btn-default" role="button">படம்</a></p>
                 </div>
               </div>
             </div>        
           </div>  
-      </div>
-
-      <div class="col-md-4">
-        <a class="tag" ng-repeat="tag in allTags">{{tag}}</a>
       </div>
     </div>  
 

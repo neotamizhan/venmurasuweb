@@ -21,22 +21,37 @@ angular.module('venmurasuwebApp')
         $scope.fetchNovels();   
         $scope.fetchNovelsWithSections();       
         $scope.fetchLatestEpisode();    
-        $scope.setAllTags();
+        console.log('calling all tags');
+        $scope.fetchAllTags();
       });
   	}
+
+    /************/
+    /*** Utility functions ****/
+
+    Array.prototype.unique = function() {
+      var unique = [];
+      for (var i = 0; i < this.length; i++) {
+          if (unique.indexOf(this[i]) == -1) {
+              unique.push(this[i]);
+          }
+      }
+      return unique;
+    };
 
 
     /*****/
     // Getters 
 
     var getAllTags = function () {
-      var alltags = [];
-
+      var tags = [];
+      console.log("tags are " + tags);
       Enumerable.from($scope.db)
                 .select(function (x) { return x.tags; })
-                .forEach(function(i) { for(var a=0;a<i.length; a++) {alltags.push (i[a]); } });
+                .forEach(function(i) { for(var a=0;a<i.length; a++) {tags.push (i[a]); } });
 
-      return $.unique(alltags);
+      return tags.unique().sort();
+     // return $.unique(tags);
     }
 
     var getNovels = function () {
@@ -75,14 +90,25 @@ angular.module('venmurasuwebApp')
       return e;
     }
 
-    var getAllTags = function () {
-      
+    var getByTag = function (tag) {
+      return Enumerable.from($scope.db)
+                       .where (function  (x) { return $.inArray(tag, x.tags) > -1 })
+                       .orderByDescending("$.novelno")
+                       .thenByDescending("$.chapter")
+                       .toArray();
     }
 
     /********** Setters *********/
 
-    $scope.setAllTags = function () {
+    $scope.fetchAllTags = function () {
+      console.log("tags are ");
       $scope.allTags = getAllTags();
+    }
+
+    $scope.fetchByTag = function  (tag) {
+      $scope.episodes = getByTag(tag);
+
+       $scope.message = tag + " குறிச்சொல்லுடைய அத்தியாயங்கள். எண்ணிக்கை : " + $scope.episodes.length;
     }
 
     $scope.fetchLatestEpisode = function () {      
