@@ -1,6 +1,6 @@
 git checkout master
 git add .
-git commit -m "%1"
+git commit -m %1
 
 echo "Pushing to Github"
 git push origin master
