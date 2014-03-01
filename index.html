@@ -67,6 +67,12 @@
       </ul>
     </div>                
 
+
+      <div class="alert alert-success alert-dismissable" ng-show="message">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{message}}
+      </div>
+
       <div class="episodes" ng-show="episodes">
        <div class="col-sm-6 col-md-4" ng-repeat="episode in episodes">
           <div class="thumbnail">

@@ -11,7 +11,7 @@ angular.module('venmurasuwebApp')
   	$scope.novels = [];
     $scope.novelsWithSections = [];
 
-  	$scope.selectedNovel = 0;
+  	$scope.message = "Test Message";
 
   	$scope.loadData = function () {
   		var url = 'data.json?nocache=' + Math.random();
@@ -26,6 +26,10 @@ angular.module('venmurasuwebApp')
 
     /*****/
     // Getters 
+
+    var searchByTag = function (tag) {
+      
+    }
 
     var getNovels = function () {
         return Enumerable.from($scope.db)
@@ -65,12 +69,15 @@ angular.module('venmurasuwebApp')
 
     /********** Setters *********/
 
-    $scope.fetchLatestEpisode = function () {
+    $scope.fetchLatestEpisode = function () {      
       $scope.episodes = getLatestEpisode();
+
+      $scope.message = $scope.episodes[0].published_on + " தேதியிட்ட புதிய அத்தியாயம்."
     }
 
     $scope.clearEpisodes = function () {
-      $scope.episodes = [];
+      $scope.episodes = [];      
+      $scope.message = "";
     }
 
     $scope.fetchNovels = function () {
@@ -95,10 +102,12 @@ angular.module('venmurasuwebApp')
 
   	$scope.fetchEpisodes = function (section) {
   		$scope.episodes = getEpisodes(section);
+      $scope.message = section.name + " பகுதியின் அத்தியாயங்கள்";
   	}
 
   	$scope.fetchAllEpisodes = function (novel) {
   		$scope.episodes = getAllEpisodes(novel);
+      $scope.message = novel.name + " நாவலின் அனைத்து அத்தியாயங்களும். எண்ணிக்கை : " + $scope.episodes.length;
   	}
 
   	$scope.orderEpisodes = function (order) {
