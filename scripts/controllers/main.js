@@ -102,7 +102,7 @@ angular.module('venmurasuwebApp')
 
   	$scope.fetchEpisodes = function (section) {
   		$scope.episodes = getEpisodes(section);
-      $scope.message = section.name + " பகுதியின் அத்தியாயங்கள்";
+      $scope.message = section.name + " பகுதியின் அத்தியாயங்கள். எண்ணிக்கை : " + $scope.episodes.length;
   	}
 
   	$scope.fetchAllEpisodes = function (novel) {
