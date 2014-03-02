@@ -24,8 +24,17 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+ 
     <!-- Add your site or application content here -->
-    <div class="container" ng-controller="MainCtrl" ng-cloak>    
+    <div class="container" ng-controller="MainCtrl" ng-cloak>
+      <div class="row-fluid">
+        <div class="col-md-2">ஒன்று</div>
+        <div class="col-md-2">ஒன்று</div>
+        <div class="col-md-2">ஒன்று</div>
+        <div class="col-md-2">ஒன்று</div>
+        <div class="col-md-2">ஒன்று</div>
+        <div class="col-md-2">ஒன்று</div>
+      </div> 
      <div class="page-header">
       <h1>வெண்முரசு <small> ஜெயமோகன்</small></h1>
     </div>
@@ -86,7 +95,7 @@
           <div class="episodes" ng-show="episodes">
            <div class="col-sm-6 col-md-4" ng-repeat="episode in episodes">
               <div class="thumbnail">
-                <img src="{{episode.image}}" alt="...">
+                <img ng-src="{{episode.image}}" alt="...">
                 <div class="caption">
                   <p>{{episode.novelname}} - {{episode.chapter}}</p>
                   <p>{{episode.sectionname}}</p>
