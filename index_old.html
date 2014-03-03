@@ -40,7 +40,7 @@
                           <span class="icon-bar"></span>
                           <span class="icon-bar"></span>
                       </button>
-                      <a href="#" ng-click="fetchLatestEpisode()" class="navbar-brand">வெண்முரசு <small> - ஜெயமோகன்</small></a>
+                      <a href="#" ng-click="fetchLatestepisode()" class="navbar-brand">வெண்முரசு <small> - ஜெயமோகன்</small></a>
                   </div>
 
                   <!-- Collect the nav links, forms, and other content for toggling -->
@@ -54,9 +54,13 @@
                                   <li><a href="#" ng-repeat="section in novel.sections" ng-click="fetchEpisodes(section)">{{section.id}}. {{section.name}}</a></li>
                               </ul>
                           </li>
-                          <li><a href="#">வரிசை : </a></li>
-                          <li><a href="#" ng-click="orderEpisodes('a')"><span class="glyphicon glyphicon-sort-by-attributes"></span></a></li>
-                          <li><a href="#" ng-click="orderEpisodes('d')"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span></a></li>                          
+                          <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">வரிசை<b class="caret"></b></a>
+                              <ul class="dropdown-menu" role="menu">
+                                  <li><a href="#" ng-click="orderEpisodes('a')">அ  -  ஃ</a></li>
+                                  <li><a href="#" ng-click="orderEpisodes('d')">ஃ  -  அ</a></li>
+                              </ul>
+                          </li>
                           <li><a href="#" ng-click="fetchLatestEpisode()">ஆகப்புதிய அத்தியாயம்</a></li>
                           <li><a href="#" ng-click="clearEpisodes()">தேடுதல்களை அழி</a></li>
                       </ul>
@@ -67,6 +71,55 @@
     <div class="row-fluid">
 
       <div class="col-md-8">           
+      <!--        
+      <div class="btn-group" ng-repeat="novel in novelsWithSections">
+          <button type="button" class="btn btn-success" ng-click="fetchAllEpisodes(novel.novel)">{{novel.novel.name}}</button>
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" ng-click="fetchAllEpisodes(novel.novel)">எல்லா அத்தியாயங்களும்</a></li>
+            <li><a href="#" ng-repeat="section in novel.sections" ng-click="fetchEpisodes(section)">{{section.id}}. {{section.name}}</a></li>
+          </ul>
+        </div>
+
+        <div class="btn-group" ng-show="allTags">
+          <button type="button" class="btn btn-success">குறிச்சொற்கள்</button>
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" ng-click="fetchByTag(tag)" ng-repeat="tag in allTags">{{tag}}</a></li>          
+          </ul>
+        </div>  
+
+        <div class="btn-group" ng-show="episodes.length > 1">
+          <button type="button" class="btn btn-success">வரிசை</button>
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" ng-click="orderEpisodes('a')">அ  -  ஃ</a></li>
+            <li><a href="#" ng-click="orderEpisodes('d')">ஃ  -  அ</a></li>
+          </ul>
+        </div>    
+
+        <div class="btn-group" ng-show="episodes">
+          <button type="button" class="btn btn-success">பிற</button>
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" ng-click="clearEpisodes()">Clear</a></li>
+            <li><a href="#" ng-click="fetchLatestEpisode()">புதிய அத்தியாயம்</a></li>
+          </ul>
+        </div> 
+        -->               
+
 
           <div class="alert alert-primary" ng-show="message">
             {{message}}
@@ -87,8 +140,8 @@
       </div>
 
       <div class="col-md-3">
-        <h3><span class="label label-primary">குறிச்சொற்கள்</span></h3>
-        <p><i class="glyphicon glyphicon-search"></i> : <input ng-model="query"/></p>
+        <h3 class="sidebar-header"><i class="glyphicon glyphicon-tags"></i>குறிச்சொற்கள்</h3>
+        <p>தேடல் : <input ng-model="query"/></p>
         <a href="#" class="btn btn-xs btn-primary" ng-repeat="tag in allTags | filter:query" ng-click="fetchByTag(tag)">
             <i class="icon-tag icon-white"></i>
             {{tag}}
@@ -120,9 +173,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!--script src="bower_components/angular/angular.js"></script-->
      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
-    <!--script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script-->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>

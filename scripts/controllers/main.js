@@ -105,7 +105,11 @@ angular.module('venmurasuwebApp')
     $scope.fetchByTag = function  (tag) {
       $scope.episodes = getByTag(tag);
 
-       $scope.message = tag + " குறிச்சொல்லுடைய அத்தியாயங்கள். எண்ணிக்கை : " + $scope.episodes.length;
+      var singular = "அத்தியாயம்.";
+      var plural = "அத்தியாயங்கள். எண்ணிக்கை : " + $scope.episodes.length;
+       var t = ($scope.episodes.length == 1) ? singular : plural;
+       $scope.message = tag + " என்ற குறிச்சொல்லுடைய " + t;     
+      
     }
 
     $scope.fetchLatestEpisode = function () {      
