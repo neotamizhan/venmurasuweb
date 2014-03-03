@@ -88,6 +88,7 @@
                       -->
                   <!--Filterable menu ends-->
                   <!--Filterable content starts here-->
+                  <!--
                   <div id="container">
                       <div class="episodes" ng-show="episodes">
                           <div ng-repeat="episode in episodes" class="col-sm-6 col-md-3">
@@ -119,6 +120,22 @@
                           </div>
                       </div>
                   </div>
+                  -->
+
+        <div id="wrapper">
+            <div id="columns">
+                <div ng-repeat="episode in episodes">                  
+                    <div class="pin">
+                        <img ng-src="{{episode.image}}" alt="...">
+                        <div class="caption">
+                            <p>{{episode.novelname}} - {{episode.chapter}}</p>
+                            <p>{{episode.sectionname}}</p>
+                            <p><a href="{{episode.url}}" target="_blank" class="btn btn-primary" role="button">கதை</a> <a href="{{episode.image}}" target="_blank" class="btn btn-default" role="button">படம்</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>​                  
                       <!--filterable content ends here-->
                   </div>
         </div>  
