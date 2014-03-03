@@ -89,9 +89,9 @@
       <div class="col-md-3">
         <h3><span class="label label-primary">குறிச்சொற்கள்</span></h3>
         <p><i class="glyphicon glyphicon-search"></i> : <input ng-model="query"/></p>
-        <a href="#" class="btn btn-xs btn-primary" ng-repeat="tag in allTags | filter:query" ng-click="fetchByTag(tag)">
+        <a href="#" class="btn btn-xs btn-primary" ng-repeat="tag in tagCount | filter:query" ng-click="fetchByTag(tag.tag)">
             <i class="icon-tag icon-white"></i>
-            {{tag}}
+            {{tag.tag}} {{tag.count}}
         </a>
       </div>  
     </div>  

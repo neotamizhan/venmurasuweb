@@ -11,6 +11,7 @@ angular.module('venmurasuwebApp')
   	$scope.novels = [];
     $scope.novelsWithSections = [];
     $scope.allTags = [];
+    $scope.tagCount = [];
 
   	$scope.message = "";
 
@@ -21,7 +22,8 @@ angular.module('venmurasuwebApp')
         $scope.fetchNovels();   
         $scope.fetchNovelsWithSections();       
         $scope.fetchLatestEpisode();    
-        $scope.fetchAllTags();
+        //$scope.fetchAllTags();
+        getTagCount();
       });
   	}
 
@@ -50,6 +52,24 @@ angular.module('venmurasuwebApp')
 
       return tags.unique().sort();
      // return $.unique(tags);
+    }
+
+    var getTagCount = function () {
+      
+      var tags = [];
+      Enumerable.from($scope.db)
+                .select(function (x) { return x.tags; })
+                .forEach(function(i) { for(var a=0;a<i.length; a++) {tags.push (i[a]); } });
+
+
+      var counts = {};
+
+      for(var i = 0; i< tags.length; i++) {
+          var num = tags[i];
+          counts[num] = counts[num] ? counts[num]+1 : 1;
+      }
+
+      $scope.tagCount = Enumerable.from(counts).select("{'tag' : $.key, 'count' : $.value}").orderByDescending("$.count").toArray();
     }
 
     var getNovels = function () {
