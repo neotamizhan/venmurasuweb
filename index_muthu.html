@@ -16,7 +16,7 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/main_muthu.css">
     <!-- endbuild -->
   </head>
   <body ng-app="venmurasuwebApp">
@@ -24,11 +24,12 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
+ 
     <!-- Add your site or application content here -->
-      <div class="container" ng-controller="MainCtrl" ng-cloak>
-          <div class="page-header">
-              <h1>வெண்முரசு <small> ஜெயமோகன்</small></h1>
-          </div>
+    <div class="container1" ng-controller="MainCtrl" ng-cloak>
+     <!--div class="page-header">
+      <h1>வெண்முரசு <small> ஜெயமோகன்</small></h1>
+    </div-->
           <nav class="navbar navbar-default" role="navigation">
               <div class="container-fluid">
                   <!-- Brand and toggle get grouped for better mobile display -->
@@ -39,7 +40,7 @@
                           <span class="icon-bar"></span>
                           <span class="icon-bar"></span>
                       </button>
-                      <a href="#" ng-click="fetchlatestepisode()" class="navbar-brand">முகப்பு</a>
+                      <a href="#" ng-click="fetchLatestEpisode()" class="navbar-brand">வெண்முரசு <small> - ஜெயமோகன்</small></a>
                   </div>
 
                   <!-- Collect the nav links, forms, and other content for toggling -->
@@ -53,74 +54,23 @@
                                   <li><a href="#" ng-repeat="section in novel.sections" ng-click="fetchEpisodes(section)">{{section.id}}. {{section.name}}</a></li>
                               </ul>
                           </li>
-                          <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">குறிச்சொற்கள்<b class="caret"></b></a>
-                              <ul class="dropdown-menu">
-                                  <li><a href="#" ng-click="fetchByTag(tag)" ng-repeat="tag in allTags">{{tag}}</a></li>
-                              </ul>
-                          </li>
-                          <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">வரிசை<b class="caret"></b></a>
-                              <ul class="dropdown-menu" role="menu">
-                                  <li><a href="#" ng-click="orderEpisodes('a')">அ  -  ஃ</a></li>
-                                  <li><a href="#" ng-click="orderEpisodes('d')">ஃ  -  அ</a></li>
-                              </ul>
-                          </li>
+                          <li><a href="#">வரிசை : </a></li>
+                          <li><a href="#" ng-click="orderEpisodes('a')"><span class="glyphicon glyphicon-sort-by-attributes"></span></a></li>
+                          <li><a href="#" ng-click="orderEpisodes('d')"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span></a></li>                          
+                          <li><a href="#" ng-click="fetchLatestEpisode()">ஆகப்புதிய அத்தியாயம்</a></li>
                           <li><a href="#" ng-click="clearEpisodes()">தேடுதல்களை அழி</a></li>
                       </ul>
                   </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->
           </nav>
-   
-              <div class="row">
-                  <div class="alert alert-primary" ng-show="message">
-                      {{message}}
-                  </div>
-                  <!--Filterable menu starts
-                      <section id="options" class="clearfix">
-                          <div class="option-combo">
-                              <ul id="filters" class="option-set clearfix" data-option-key="filter">
-                                  <li><a href="#filter" data-option-value="*" class="selected">show all</a></li>
-                                  <li ng-repeat="section in sections"><a href="#filter" data-option-value=".{{section.name}}">{{section.id}}. {{section.name}}</a></li>
-                              </ul>
-                          </div>
-                      </section>
-                      -->
-                  <!--Filterable menu ends-->
-                  <!--Filterable content starts here-->
-                  <!--
-                  <div id="container">
-                      <div class="episodes" ng-show="episodes">
-                          <div ng-repeat="episode in episodes" class="col-sm-6 col-md-3">
-                              <div class="thumbnail" data-category="{{episode.sectionname}}">
-                                  <img src="{{episode.image}}" alt="...">
-                                  <div class="caption">
-                                      <p>{{episode.novelname}} - {{episode.chapter}}</p>
-                                      <p>{{episode.sectionname}}</p>
-                                      <p>
-                                          <a href="{{episode.url}}" target="_blank" class="btn btn-primary" role="button">கதை</a>
-                                          <a href="#{{episode.novelname}}-{{episode.chapter}}" role="button" class="btn" data-toggle="modal">படம்</a>
-                                      </p>
-                                  </div>
-                              </div>
-                              <div id="{{episode.novelname}}-{{episode.chapter}}" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                  <div class="modal-header">
-                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                      <h3 id="myModalLabel">{{episode.novelname}} - {{episode.chapter}} - {{episode.sectionname}}</h3>
-                                  </div>
-                                  <div class="modal-body">
-                                      <div style="text-align: center;">
-                                          <img src="{{episode.image}}" style="height:auto; width:auto; max-width:800px; max-height:600px;" />
-                                      </div>
-                                  </div>
-                                  <div class="modal-footer">
-                                      <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  -->
+
+    <div class="row-fluid">
+
+      <div class="col-md-8">           
+
+          <div class="alert alert-primary" ng-show="message">
+            {{message}}
+          </div>
 
         <div id="wrapper">
             <div id="columns">
@@ -130,15 +80,25 @@
                         <div class="caption">
                             <p>{{episode.novelname}} - {{episode.chapter}}</p>
                             <p>{{episode.sectionname}}</p>
-                            <p><a href="{{episode.url}}" target="_blank" class="btn btn-primary" role="button">கதை</a> <a href="{{episode.image}}" target="_blank" class="btn btn-default" role="button">படம்</a></p>
+                            <p><a href="{{episode.url}}" target="_blank" class="btn btn-primary btn-sm" role="button">கதை</a> <a href="{{episode.image}}" target="_blank" class="btn btn-default btn-sm" role="button">படம்</a></p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>​                  
-                      <!--filterable content ends here-->
-                  </div>
-        </div>  
+        </div>​ 
+      </div>
+
+      <div class="col-md-3">
+        <h3><span class="label label-primary">குறிச்சொற்கள்</span></h3>
+        <p><i class="glyphicon glyphicon-search"></i> : <input ng-model="query"/></p>
+        <a href="#" class="btn btn-xs btn-primary" ng-repeat="tag in allTags | filter:query" ng-click="fetchByTag(tag)">
+            <i class="icon-tag icon-white"></i>
+            {{tag}}
+        </a>
+      </div>  
+    </div>  
+
+    </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -159,11 +119,12 @@
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <!--script src="bower_components/jquery/jquery.js"></script-->
-
-    <!--script src="bower_components/angular/angular.js"></script-->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!--script src="bower_components/angular/angular.js"></script-->
+     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+    <!--script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script-->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
@@ -173,9 +134,7 @@
     <script src="bower_components/linqjs/linq.js"></script>
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-        <!-- endbuild -->     
-
-    
+        <script src="scripts/controllers/main.js"></script>
+        <!-- endbuild -->
 </body>
 </html>
