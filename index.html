@@ -54,11 +54,15 @@
                                   <li><a href="#" ng-repeat="section in novel.sections" ng-click="fetchEpisodes(section)">{{section.id}}. {{section.name}}</a></li>
                               </ul>
                           </li>
-                          <li><a href="#">வரிசை : </a></li>
-                          <li><a href="#" ng-click="orderEpisodes('a')"><span class="glyphicon glyphicon-sort-by-attributes"></span></a></li>
-                          <li><a href="#" ng-click="orderEpisodes('d')"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span></a></li>                          
                           <li><a href="#" ng-click="fetchLatestEpisode()">ஆகப்புதிய அத்தியாயம்</a></li>
                           <li><a href="#" ng-click="clearEpisodes()">தேடுதல்களை அழி</a></li>
+                         <li class="dropdown" ng-show="episodes.length > 1">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">வரிசை<b class="caret"></b></a>
+                              <ul class="dropdown-menu">
+                                <li><a href="#" ng-click="orderEpisodes('a')"><span class="glyphicon glyphicon-sort-by-attributes"></span>  அ -> ஃ</a></li>
+                                <li><a href="#" ng-click="orderEpisodes('d')"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span>  ஃ -> அ</a></li>      
+                              </ul>
+                          </li>                          
                       </ul>
                   </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->

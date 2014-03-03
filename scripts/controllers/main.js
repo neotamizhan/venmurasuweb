@@ -1,6 +1,11 @@
 'use strict';
 
-angular.module('venmurasuwebApp')
+angular.module('myFilters', []).filter('joinArray', function() {
+  return function(array) {
+    return array.join();
+}});
+
+angular.module('venmurasuwebApp',['myFilters'])
   .controller('MainCtrl', function ($scope, $http) {
 
     /****** Init Stuff ***/
