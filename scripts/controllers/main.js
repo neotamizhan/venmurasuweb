@@ -1,17 +1,15 @@
 'use strict';
 
-angular.module('myFilters', []).filter('joinArray', function() {
-  return function(array) {
-    return array.join();
-}});
+//angular.module('venmurasuwebApp',['ngRoute']);
 
-angular.module('venmurasuwebApp',['myFilters'])
-  .controller('MainCtrl', function ($scope, $http) {
+
+
+function MainCtrl ($scope, $http, Helper) {
 
     /****** Init Stuff ***/
-
   	$scope.db = [];
-  	$scope.episodes = [];
+  	$scope.episodes = []; //Data.getEpisodes();
+
   	$scope.sections = [];
   	$scope.novels = [];
     $scope.novelsWithSections = [];
@@ -24,13 +22,21 @@ angular.module('venmurasuwebApp',['myFilters'])
   		var url = 'data.json?nocache=' + Math.random();
   		$http.get(url).then(function (response) { 
         $scope.db = response.data; 
-        $scope.fetchNovels();   
-        $scope.fetchNovelsWithSections();       
-        $scope.fetchLatestEpisode();    
+        
+        initialize();     
+        //$scope.fetchLatestEpisode();    
         //$scope.fetchAllTags();
-        getTagCount();
+        //getTagCount();
+
+        //$scope.fetchAllEpisodes($scope.novels[0]);
       });
   	}
+
+    var initialize = function () {
+      $scope.fetchNovels();   
+      $scope.fetchNovelsWithSections();
+      $scope.tagCount = Helper.getTagCount($scope.db);  
+    }
 
     /************/
     /*** Utility functions ****/
@@ -49,77 +55,6 @@ angular.module('venmurasuwebApp',['myFilters'])
     /*****/
     // Getters 
 
-    var getAllTags = function () {
-      var tags = [];
-      Enumerable.from($scope.db)
-                .select(function (x) { return x.tags; })
-                .forEach(function(i) { for(var a=0;a<i.length; a++) {tags.push (i[a]); } });
-
-      return tags.unique().sort();
-     // return $.unique(tags);
-    }
-
-    var getTagCount = function () {
-      
-      var tags = [];
-      Enumerable.from($scope.db)
-                .select(function (x) { return x.tags; })
-                .forEach(function(i) { for(var a=0;a<i.length; a++) {tags.push (i[a]); } });
-
-
-      var counts = {};
-
-      for(var i = 0; i< tags.length; i++) {
-          var num = tags[i];
-          counts[num] = counts[num] ? counts[num]+1 : 1;
-      }
-
-      $scope.tagCount = Enumerable.from(counts).select("{'tag' : $.key, 'count' : $.value}").orderByDescending("$.count").toArray();
-    }
-
-    var getNovels = function () {
-        return Enumerable.from($scope.db)
-                .select(function(x) { return {"id" : x.novelno, "name" : x.novelname} })
-                .distinct("$.id")
-                .toArray();
-    }
-
-    var getSections = function (novel) {
-      return Enumerable.from($scope.db)
-                .where (function (x) { return x.novelno == novel.id})
-                .select(function (x) { return {"novelno" : x.novelno, "id" : x.sectionno, "name" : x.sectionname} })
-                .distinct("$.id")
-                .toArray();           
-    };
-
-
-    var getEpisodes = function (section) {
-      return Enumerable.from($scope.db)
-                .where (function (x) { return x.novelno == section.novelno && x.sectionno == section.id  })
-                .toArray();
-    }
-
-    var getAllEpisodes = function (novel) {
-      return Enumerable.from($scope.db)
-                .where (function (x) { return x.novelno == novel.id })
-                .orderByDescending("$.chapter")
-                .toArray();     
-    }
-    
-
-    var getLatestEpisode = function () {      
-      var e = [];
-      e.push($scope.db[$scope.db.length - 1]);
-      return e;
-    }
-
-    var getByTag = function (tag) {
-      return Enumerable.from($scope.db)
-                       .where (function  (x) { return $.inArray(tag, x.tags) > -1 })
-                       .orderByDescending("$.novelno")
-                       .thenByDescending("$.chapter")
-                       .toArray();
-    }
 
     /********** Setters *********/
 
@@ -128,19 +63,8 @@ angular.module('venmurasuwebApp',['myFilters'])
     }
 
     $scope.fetchByTag = function  (tag) {
-      $scope.episodes = getByTag(tag);
-
-      var singular = "அத்தியாயம்.";
-      var plural = "அத்தியாயங்கள். எண்ணிக்கை : " + $scope.episodes.length;
-       var t = ($scope.episodes.length == 1) ? singular : plural;
-       $scope.message = tag + " என்ற குறிச்சொல்லுடைய " + t;     
+   
       
-    }
-
-    $scope.fetchLatestEpisode = function () {      
-      $scope.episodes = getLatestEpisode();
-
-      $scope.message = $scope.episodes[0].published_on + " தேதியிட்ட புதிய அத்தியாயம்."
     }
 
     $scope.clearEpisodes = function () {
@@ -149,7 +73,7 @@ angular.module('venmurasuwebApp',['myFilters'])
     }
 
     $scope.fetchNovels = function () {
-        $scope.novels = getNovels();
+        $scope.novels = Helper.getNovels($scope.db);
     }
 
     $scope.fetchNovelsWithSections = function () {
@@ -158,13 +82,13 @@ angular.module('venmurasuwebApp',['myFilters'])
       for (var i = 0; i < $scope.novels.length; i++) {
         var novelWithSections = {};
         novelWithSections.novel = $scope.novels[i];
-        novelWithSections.sections = getSections($scope.novels[i]);
+        novelWithSections.sections = Helper.getSections($scope.db,$scope.novels[i]);
         $scope.novelsWithSections.push (novelWithSections);
       };      
     }    
 
   	$scope.fetchSections = function (novel) {
-  		$scope.sections = getSections(novel);		        
+  		$scope.sections = Helper.getSections($scope.db, novel);		        
   	};
 
 
@@ -198,4 +122,30 @@ angular.module('venmurasuwebApp',['myFilters'])
 
   	$scope.loadData();
 
-  });
+  };
+
+
+function LatestEpisodeController ($scope) {
+      var e = [];
+      e.push($scope.db[$scope.db.length - 1]);         
+      $scope.episodes = e;
+      $scope.message = $scope.episodes[0].published_on + " தேதியிட்ட புதிய அத்தியாயம்."
+}
+
+function NovelController ($scope, $routeParams, Helper) {
+    $scope.episodes = Helper.getEpisodesByNovel($scope.db, $routeParams.novel);
+}
+
+function SectionController ($scope, $routeParams, Helper) {
+  $scope.episodes = Helper.getEpisodesByNovelAndSection($scope.db, $routeParams.novel, $routeParams.section);
+  $scope.message = $scope.episodes[0].sectionname + " பகுதியின் அத்தியாயங்கள். எண்ணிக்கை : " + $scope.episodes.length;
+}
+
+function TagController ($scope, $routeParams, Helper) {
+  $scope.episodes = Helper.getEpisodesByTag($scope.db, $routeParams.tag);
+
+  var singular = "அத்தியாயம்.";
+  var plural = "அத்தியாயங்கள். எண்ணிக்கை : " + $scope.episodes.length;
+  var t = ($scope.episodes.length == 1) ? singular : plural;
+  $scope.message = $routeParams.tag + " என்ற குறிச்சொல்லுடைய " + t;  
+}

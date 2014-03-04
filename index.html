@@ -30,7 +30,7 @@
      <!--div class="page-header">
       <h1>வெண்முரசு <small> ஜெயமோகன்</small></h1>
     </div-->
-          <nav class="navbar navbar-default" role="navigation">
+          <nav class="navbar navbar-default" role="navigation" >
               <div class="container-fluid">
                   <!-- Brand and toggle get grouped for better mobile display -->
                   <div class="navbar-header">
@@ -40,27 +40,27 @@
                           <span class="icon-bar"></span>
                           <span class="icon-bar"></span>
                       </button>
-                      <a href="#" ng-click="fetchLatestEpisode()" class="navbar-brand">வெண்முரசு <small> - ஜெயமோகன்</small></a>
+                      <a href="#/latest" class="navbar-brand">வெண்முரசு <small> - ஜெயமோகன்</small></a>
                   </div>
 
                   <!-- Collect the nav links, forms, and other content for toggling -->
                   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                       <ul class="nav navbar-nav">
                           <li class="dropdown" ng-repeat="novel in novelsWithSections">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{novel.novel.name}}<b class="caret"></b></a>
+                              <a class="dropdown-toggle" data-toggle="dropdown">{{novel.novel.name}}<b class="caret"></b></a>
                               <ul class="dropdown-menu">
-                                  <li><a href="#" ng-click="fetchAllEpisodes(novel.novel)">எல்லா அத்தியாயங்களும்</a></li>
+                                  <li><a href="#/novel/{{novel.novel.id}}">எல்லா அத்தியாயங்களும்</a></li>
                                   <li class="divider"></li>
-                                  <li><a href="#" ng-repeat="section in novel.sections" ng-click="fetchEpisodes(section)">{{section.id}}. {{section.name}}</a></li>
+                                  <li><a href="#/novel/{{novel.novel.id}}/section/{{section.id}}" ng-repeat="section in novel.sections">{{section.id}}. {{section.name}}</a></li>
                               </ul>
                           </li>
-                          <li><a href="#" ng-click="fetchLatestEpisode()">ஆகப்புதிய அத்தியாயம்</a></li>
-                          <li><a href="#" ng-click="clearEpisodes()">தேடுதல்களை அழி</a></li>
-                         <li class="dropdown" ng-show="episodes.length > 1">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">வரிசை<b class="caret"></b></a>
+                          <li><a href="#/latest">ஆகப்புதிய அத்தியாயம்</a></li>
+                          <li><a ng-click="clearEpisodes()">தேடுதல்களை அழி</a></li>
+                         <li class="dropdown">
+                              <a class="dropdown-toggle" data-toggle="dropdown">வரிசை<b class="caret"></b></a>
                               <ul class="dropdown-menu">
-                                <li><a href="#" ng-click="orderEpisodes('a')"><span class="glyphicon glyphicon-sort-by-attributes"></span>  அ -> ஃ</a></li>
-                                <li><a href="#" ng-click="orderEpisodes('d')"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span>  ஃ -> அ</a></li>      
+                                <li><a ng-click="orderEpisodes('a')"><span class="glyphicon glyphicon-sort-by-attributes"></span>  அ -> ஃ</a></li>
+                                <li><a ng-click="orderEpisodes('d')"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span>  ஃ -> அ</a></li>      
                               </ul>
                           </li>                          
                       </ul>
@@ -72,28 +72,13 @@
 
       <div class="col-md-8">           
 
-          <div class="alert alert-primary" ng-show="message">
-            {{message}}
-          </div>
-
-          <div class="episodes" ng-show="episodes">
-           <div class="col-sm-6 col-md-4" ng-repeat="episode in episodes">
-              <div class="thumbnail">
-                <img ng-src="{{episode.image}}" alt="...">
-                <div class="caption">
-                  <p>{{episode.novelname}} - {{episode.chapter}}</p>
-                  <p>{{episode.sectionname}}</p>
-                  <p><a href="{{episode.url}}" target="_blank" class="btn btn-primary" role="button">கதை</a> <a href="{{episode.image}}" target="_blank" class="btn btn-default" role="button">படம்</a></p>
-                </div>
-              </div>
-            </div>        
-          </div>  
+          <ng-view></ng-view>
       </div>
 
       <div class="col-md-3">
         <h3><span class="label label-primary">குறிச்சொற்கள்</span></h3>
         <p><i class="glyphicon glyphicon-search"></i> : <input ng-model="query"/></p>
-        <a href="#" class="btn btn-xs btn-primary" ng-repeat="tag in tagCount | filter:query" ng-click="fetchByTag(tag.tag)">
+        <a href="#/tag/{{tag.tag}}" class="btn btn-xs btn-primary" ng-repeat="tag in tagCount | filter:query">
             <i class="icon-tag icon-white"></i>
             {{tag.tag}} {{tag.count}}
         </a>
