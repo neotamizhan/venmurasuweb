@@ -12,6 +12,10 @@ angular.module('venmurasuwebApp', [
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/latest', {
+        templateUrl: 'views/main.html',
+        controller: 'LatestCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
