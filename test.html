@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<input type="text" id="name" placeholder="Enter the Name"/>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<script type="text/javascript">
+	
+	$('#name').on('keyup',function () {
+		//console.log(this.value);
+		this.value = Number(this.value).toLocaleString();
+	})
+</script>
+
+</body>
+</html>
