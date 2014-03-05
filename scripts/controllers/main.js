@@ -18,6 +18,8 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
 
   	$scope.message = "";
 
+
+
   	$scope.loadData = function () {
   		var url = 'data.json?nocache=' + Math.random();
   		$http.get(url).then(function (response) { 
@@ -123,7 +125,7 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
 
     /*** Init Stuff ***/
 
-  	$scope.loadData();
+  	//$scope.loadData();
 
   };
 

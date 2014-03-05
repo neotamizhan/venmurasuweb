@@ -9,13 +9,12 @@ angular.module('venmurasuwebApp', [
   .config(function ($routeProvider) {    
     $routeProvider
       .when('/', {
-        templateUrl: '/views/episodes.html'//,
-        //controller: 'MainCtrl'
+        templateUrl: '/views/episodes.html'
       })
       .when('/latest', {
         templateUrl: '/views/episodes.html',
         controller: 'LatestEpisodeController'
-      })
+      })     
       .when('/novel/:novel', {
         templateUrl: '/views/episodes.html',
         controller: 'NovelController'
