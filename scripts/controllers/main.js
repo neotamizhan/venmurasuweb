@@ -5,8 +5,10 @@ angular.module('myFilters', []).filter('joinArray', function() {
     return array.join();
 }});
 
-angular.module('venmurasuwebApp',['myFilters'])
-  .controller('MainCtrl', function ($scope, $http) {
+/*angular.module('venmurasuwebApp',[])
+  .controller('MainCtrl', function ($scope, $http) {*/
+
+function MainCtrl ($scope, $http, $routeParams ) {
 
     /****** Init Stuff ***/
 
@@ -20,6 +22,7 @@ angular.module('venmurasuwebApp',['myFilters'])
 
   	$scope.message = "";
 
+      
 
 
   	$scope.loadData = function () {
@@ -32,7 +35,7 @@ angular.module('venmurasuwebApp',['myFilters'])
         //$scope.fetchAllTags();
         getTagCount();
       });
-  	}
+  	};
 
     /************/
     /*** Utility functions ****/
@@ -199,5 +202,6 @@ angular.module('venmurasuwebApp',['myFilters'])
     /*** Init Stuff ***/
 
   	//$scope.loadData();
+   
 
-  });
+  };
