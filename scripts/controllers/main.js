@@ -4,11 +4,11 @@
 
 
 
-function MainCtrl ($scope, $http, Helper) {
+function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
 
     /****** Init Stuff ***/
   	$scope.db = [];
-  	$scope.episodes = []; //Data.getEpisodes();
+  	$scope.episodes = EpisodeService.Episodes; //Data.getEpisodes();
 
   	$scope.sections = [];
   	$scope.novels = [];
@@ -23,12 +23,7 @@ function MainCtrl ($scope, $http, Helper) {
   		$http.get(url).then(function (response) { 
         $scope.db = response.data; 
         
-        initialize();     
-        //$scope.fetchLatestEpisode();    
-        //$scope.fetchAllTags();
-        //getTagCount();
-
-        //$scope.fetchAllEpisodes($scope.novels[0]);
+        initialize();
       });
   	}
 
@@ -36,6 +31,11 @@ function MainCtrl ($scope, $http, Helper) {
       $scope.fetchNovels();   
       $scope.fetchNovelsWithSections();
       $scope.tagCount = Helper.getTagCount($scope.db);  
+      // go to /latest
+      console.log('path is ' + $location.path());
+      if ($location.path() == "/")
+        $location.path('/latest');
+     // $scope.$apply();
     }
 
     /************/
@@ -68,8 +68,11 @@ function MainCtrl ($scope, $http, Helper) {
     }
 
     $scope.clearEpisodes = function () {
-      $scope.episodes = [];      
-      $scope.message = "";
+      console.log('Clearing');
+      console.log(EpisodeService.Episodes.length);
+      EpisodeService.Episodes = [];
+      //$scope.episodes = [];      
+      $scope.message = "";      
     }
 
     $scope.fetchNovels = function () {
@@ -125,27 +128,40 @@ function MainCtrl ($scope, $http, Helper) {
   };
 
 
-function LatestEpisodeController ($scope) {
-      var e = [];
-      e.push($scope.db[$scope.db.length - 1]);         
-      $scope.episodes = e;
-      $scope.message = $scope.episodes[0].published_on + " தேதியிட்ட புதிய அத்தியாயம்."
+function LatestEpisodeController ($scope, EpisodeService) {
+  $scope.episodes = EpisodeService.Episodes;
+  var e = [];      
+  e.push($scope.db[$scope.db.length - 1]);         
+  $scope.episodes = e;
+  $scope.message = $scope.episodes[0].published_on + " தேதியிட்ட புதிய அத்தியாயம்."
 }
 
-function NovelController ($scope, $routeParams, Helper) {
-    $scope.episodes = Helper.getEpisodesByNovel($scope.db, $routeParams.novel);
+function NovelController ($scope, $routeParams, Helper, EpisodeService) {
+  $scope.episodes = EpisodeService.Episodes;
+  $scope.episodes = Helper.getEpisodesByNovel($scope.db, $routeParams.novel);
 }
 
-function SectionController ($scope, $routeParams, Helper) {
+function SectionController ($scope, $routeParams, Helper, EpisodeService) {
+  $scope.episodes = EpisodeService.Episodes;
   $scope.episodes = Helper.getEpisodesByNovelAndSection($scope.db, $routeParams.novel, $routeParams.section);
   $scope.message = $scope.episodes[0].sectionname + " பகுதியின் அத்தியாயங்கள். எண்ணிக்கை : " + $scope.episodes.length;
 }
 
-function TagController ($scope, $routeParams, Helper) {
+function TagController ($scope, $routeParams, Helper, EpisodeService) {
+  $scope.episodes = EpisodeService.Episodes;
   $scope.episodes = Helper.getEpisodesByTag($scope.db, $routeParams.tag);
 
   var singular = "அத்தியாயம்.";
   var plural = "அத்தியாயங்கள். எண்ணிக்கை : " + $scope.episodes.length;
   var t = ($scope.episodes.length == 1) ? singular : plural;
   $scope.message = $routeParams.tag + " என்ற குறிச்சொல்லுடைய " + t;  
+}
+
+function NovelController ($scope, $routeParams, Helper, EpisodeService) {
+  $scope.episodes = EpisodeService.Episodes;
+  $scope.episodes = Helper.getEpisodesByNovel($scope.db, $routeParams.novel);
+}
+
+function EpisodeController ($scope, $routeParams, Helper) {
+  $scope.episode = Helper.getEpisode($scope.db, $routeParams.novel, $routeParams.chapter);
 }

@@ -9,25 +9,29 @@ angular.module('venmurasuwebApp', [
   .config(function ($routeProvider) {    
     $routeProvider
       .when('/', {
-        templateUrl: '/views/main.html'//,
+        templateUrl: '/views/episodes.html'//,
         //controller: 'MainCtrl'
       })
       .when('/latest', {
-        templateUrl: '/views/main.html',
+        templateUrl: '/views/episodes.html',
         controller: 'LatestEpisodeController'
       })
       .when('/novel/:novel', {
-        templateUrl: '/views/main.html',
+        templateUrl: '/views/episodes.html',
         controller: 'NovelController'
       })
       .when('/novel/:novel/section/:section', {
-        templateUrl: '/views/main.html',
+        templateUrl: '/views/episodes.html',
         controller: 'SectionController'
       })
       .when('/tag/:tag', {
-        templateUrl: '/views/main.html',
+        templateUrl: '/views/episodes.html',
         controller: 'TagController'
       })      
+      .when('/novel/:novel/chapter/:chapter', {
+        templateUrl: '/views/episode_detail.html',
+        controller: 'EpisodeController'
+      })            
       .otherwise({
         redirectTo: '/'
       });
@@ -79,6 +83,12 @@ angular.module('venmurasuwebApp', [
                 .toArray();           
     };
 
+    this.getEpisode = function (db, novel, chapter) {
+      var e = Enumerable.from(db)
+                .where (function (x) { return x.novelno == novel && x.chapter == chapter})
+                .toArray();   
+      return (e.length > 0) ? e[0] : {};
+    }
 
     this.getEpisodesByNovel = function (db, novel) {
       return Enumerable.from(db)
@@ -101,4 +111,11 @@ angular.module('venmurasuwebApp', [
                        .toArray();
     };
 
+  })
+
+
+  .service('EpisodeService', function () {
+    var episodes = [];
+
+    this.Episodes = episodes;
   });
