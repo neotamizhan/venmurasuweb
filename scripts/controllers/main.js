@@ -15,7 +15,7 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
 
   	$scope.message = "";
 
-      
+    $scope.url = "";
 
 
   	$scope.loadData = function () {
@@ -177,10 +177,14 @@ function NovelController ($scope, $routeParams, Helper, EpisodeService) {
   $scope.episodes = Helper.getEpisodesByNovel($scope.db, $routeParams.novel);
 }
 
-function EpisodeController ($scope, $routeParams, Helper) {
+function EpisodeController ($scope, $routeParams, Helper, $location) {
+  $scope.contentLoaded = false;  
+  $scope.url = $location.path();
+  
   if ($scope.initialized == undefined) {
     $scope.loadData();
   }
 
   $scope.episode = Helper.getEpisode($scope.db, $routeParams.novel, $routeParams.chapter);
+  $scope.contentLoaded = true;
 }
