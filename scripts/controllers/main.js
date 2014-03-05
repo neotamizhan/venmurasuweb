@@ -3,6 +3,7 @@
 function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
 
     /****** Init Stuff ***/
+    $scope.initialized = false;
   	$scope.db = [];
   	$scope.episodes = EpisodeService.Episodes; //Data.getEpisodes();
 
@@ -27,9 +28,12 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
   	};
 
     var initialize = function () {
+      console.log('initialized');
       $scope.fetchNovels();   
       $scope.fetchNovelsWithSections();
       $scope.tagCount = Helper.getTagCount($scope.db);  
+
+      $scope.initialized = true;
       // go to /latest
       console.log('path is ' + $location.path());
       if ($location.path() == "/")
@@ -128,6 +132,10 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
 
 
 function LatestEpisodeController ($scope, EpisodeService) {
+  if ($scope.initialized == undefined) {
+    $scope.loadData();
+  }
+
   $scope.episodes = EpisodeService.Episodes;
   var e = [];      
   e.push($scope.db[$scope.db.length - 1]);         
@@ -135,18 +143,20 @@ function LatestEpisodeController ($scope, EpisodeService) {
   $scope.message = $scope.episodes[0].published_on + " தேதியிட்ட புதிய அத்தியாயம்."
 }
 
-function NovelController ($scope, $routeParams, Helper, EpisodeService) {
-  $scope.episodes = EpisodeService.Episodes;
-  $scope.episodes = Helper.getEpisodesByNovel($scope.db, $routeParams.novel);
-}
-
 function SectionController ($scope, $routeParams, Helper, EpisodeService) {
+  if ($scope.initialized == undefined) {
+    $scope.loadData();
+  }
   $scope.episodes = EpisodeService.Episodes;
   $scope.episodes = Helper.getEpisodesByNovelAndSection($scope.db, $routeParams.novel, $routeParams.section);
   $scope.message = $scope.episodes[0].sectionname + " பகுதியின் அத்தியாயங்கள். எண்ணிக்கை : " + $scope.episodes.length;
 }
 
 function TagController ($scope, $routeParams, Helper, EpisodeService) {
+  if ($scope.initialized == undefined) {
+    $scope.loadData();
+  }
+
   $scope.episodes = EpisodeService.Episodes;
   $scope.episodes = Helper.getEpisodesByTag($scope.db, $routeParams.tag);
 
@@ -157,10 +167,19 @@ function TagController ($scope, $routeParams, Helper, EpisodeService) {
 }
 
 function NovelController ($scope, $routeParams, Helper, EpisodeService) {
+
+  if ($scope.initialized == undefined) {
+    $scope.loadData();
+  }
+
   $scope.episodes = EpisodeService.Episodes;
   $scope.episodes = Helper.getEpisodesByNovel($scope.db, $routeParams.novel);
 }
 
 function EpisodeController ($scope, $routeParams, Helper) {
+  if ($scope.initialized == undefined) {
+    $scope.loadData();
+  }
+
   $scope.episode = Helper.getEpisode($scope.db, $routeParams.novel, $routeParams.chapter);
 }
