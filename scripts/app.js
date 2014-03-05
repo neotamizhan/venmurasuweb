@@ -9,27 +9,27 @@ angular.module('venmurasuwebApp', [
   .config(function ($routeProvider) {    
     $routeProvider
       .when('/', {
-        templateUrl: '/views/episodes.html'
+        templateUrl: 'views/episodes.html'
       })
       .when('/latest', {
-        templateUrl: '/views/episodes.html',
+        templateUrl: 'views/episodes.html',
         controller: 'LatestEpisodeController'
       })     
       .when('/novel/:novel', {
-        templateUrl: '/views/episodes.html',
+        templateUrl: 'views/episodes.html',
         controller: 'NovelController'
         //controller: 'MainCtrl'
       })
       .when('/novel/:novel/section/:section', {
-        templateUrl: '/views/episodes.html',
+        templateUrl: 'views/episodes.html',
         controller: 'SectionController'
       })
       .when('/tag/:tag', {
-        templateUrl: '/views/episodes.html',
+        templateUrl: 'views/episodes.html',
         controller: 'TagController'
       })      
       .when('/novel/:novel/chapter/:chapter', {
-        templateUrl: '/views/episode_detail.html',
+        templateUrl: 'views/episode_detail.html',
         controller: 'EpisodeController'
       })            
       .otherwise({
