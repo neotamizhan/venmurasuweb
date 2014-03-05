@@ -1,9 +1,5 @@
 'use strict';
 
-//angular.module('venmurasuwebApp',['ngRoute']);
-
-
-
 function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
 
     /****** Init Stuff ***/
@@ -18,6 +14,7 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
 
   	$scope.message = "";
 
+      
 
 
   	$scope.loadData = function () {
@@ -27,7 +24,7 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
         
         initialize();
       });
-  	}
+  	};
 
     var initialize = function () {
       $scope.fetchNovels();   
@@ -126,7 +123,7 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
     /*** Init Stuff ***/
 
   	//$scope.loadData();
-
+   
   };
 
 
@@ -167,3 +164,4 @@ function NovelController ($scope, $routeParams, Helper, EpisodeService) {
 function EpisodeController ($scope, $routeParams, Helper) {
   $scope.episode = Helper.getEpisode($scope.db, $routeParams.novel, $routeParams.chapter);
 }
+
