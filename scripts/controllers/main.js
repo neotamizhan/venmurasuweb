@@ -1,18 +1,6 @@
 'use strict';
 
-<<<<<<< HEAD
 function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
-=======
-angular.module('myFilters', []).filter('joinArray', function() {
-  return function(array) {
-    return array.join();
-}});
-
-/*angular.module('venmurasuwebApp',[])
-  .controller('MainCtrl', function ($scope, $http) {*/
-
-function MainCtrl ($scope, $http, $routeParams ) {
->>>>>>> 00788e0996841808d94b6740fe5d71165465be2d
 
     /****** Init Stuff ***/
   	$scope.db = [];
@@ -37,7 +25,6 @@ function MainCtrl ($scope, $http, $routeParams ) {
         initialize();
       });
   	};
-<<<<<<< HEAD
 
     var initialize = function () {
       $scope.fetchNovels();   
@@ -49,8 +36,7 @@ function MainCtrl ($scope, $http, $routeParams ) {
         $location.path('/latest');
      // $scope.$apply();
     }
-=======
->>>>>>> 00788e0996841808d94b6740fe5d71165465be2d
+
 
     /************/
     /*** Utility functions ****/
