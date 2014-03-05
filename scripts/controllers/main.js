@@ -38,6 +38,8 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
       console.log('path is ' + $location.path());
       if ($location.path() == "/")
         $location.path('/latest');
+      else 
+        console.log('returning to original path ' + $location.path());
      // $scope.$apply();
     }
 
@@ -134,9 +136,9 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
 function LatestEpisodeController ($scope, EpisodeService) {
   if ($scope.initialized == undefined) {
     $scope.loadData();
+    $scope.apply();
   }
-
-  $scope.episodes = EpisodeService.Episodes;
+  
   var e = [];      
   e.push($scope.db[$scope.db.length - 1]);         
   $scope.episodes = e;
@@ -146,8 +148,7 @@ function LatestEpisodeController ($scope, EpisodeService) {
 function SectionController ($scope, $routeParams, Helper, EpisodeService) {
   if ($scope.initialized == undefined) {
     $scope.loadData();
-  }
-  $scope.episodes = EpisodeService.Episodes;
+  }  
   $scope.episodes = Helper.getEpisodesByNovelAndSection($scope.db, $routeParams.novel, $routeParams.section);
   $scope.message = $scope.episodes[0].sectionname + " பகுதியின் அத்தியாயங்கள். எண்ணிக்கை : " + $scope.episodes.length;
 }
@@ -156,10 +157,10 @@ function TagController ($scope, $routeParams, Helper, EpisodeService) {
   if ($scope.initialized == undefined) {
     $scope.loadData();
   }
-
-  $scope.episodes = EpisodeService.Episodes;
+  console.log('in tags.');
+  //$scope.episodes = EpisodeService.Episodes;
   $scope.episodes = Helper.getEpisodesByTag($scope.db, $routeParams.tag);
-
+  console.log('in tags. episode count is ' + $scope.episodes.length);
   var singular = "அத்தியாயம்.";
   var plural = "அத்தியாயங்கள். எண்ணிக்கை : " + $scope.episodes.length;
   var t = ($scope.episodes.length == 1) ? singular : plural;

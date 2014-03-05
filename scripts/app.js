@@ -6,7 +6,7 @@ angular.module('venmurasuwebApp', [
   'ngSanitize',
   'ngRoute'
 ])
-  .config(function ($routeProvider) {    
+  .config(function ($routeProvider, $locationProvider) {    
     $routeProvider
       .when('/', {
         templateUrl: 'views/episodes.html'
@@ -35,6 +35,8 @@ angular.module('venmurasuwebApp', [
       .otherwise({
         redirectTo: '/'
       });
+
+      //$locationProvider.html5Mode(true);
   })
 
   .service('Helper', function () {
@@ -104,6 +106,7 @@ angular.module('venmurasuwebApp', [
     };
     
     this.getEpisodesByTag = function (db, tag) {
+      console.log('in getEpisodesByTag looking for tag ' + tag)
       return Enumerable.from(db)
                        .where (function  (x) { return $.inArray(tag, x.tags) > -1 })
                        .orderByDescending("$.novelno")
