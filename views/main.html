@@ -1,0 +1,14 @@
+         hello
+
+          <div class="episodes" ng-show="episodes">
+           <div class="col-sm-6 col-md-4" ng-repeat="episode in episodes">
+              <div class="thumbnail">
+                <img ng-src="{{episode.image}}" alt="...">
+                <div class="caption">
+                  <p>{{episode.novelname}} - {{episode.chapter}}</p>
+                  <p>{{episode.sectionname}}</p>
+                  <p><a href="{{episode.url}}" target="_blank" class="btn btn-primary" role="button">கதை</a> <a href="{{episode.image}}" target="_blank" class="btn btn-default" role="button">படம்</a></p>
+                </div>
+              </div>
+            </div>        
+          </div> 

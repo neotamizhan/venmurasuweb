@@ -20,6 +20,8 @@ angular.module('venmurasuwebApp',['myFilters'])
 
   	$scope.message = "";
 
+
+
   	$scope.loadData = function () {
   		var url = 'data.json?nocache=' + Math.random();
   		$http.get(url).then(function (response) { 
@@ -196,6 +198,6 @@ angular.module('venmurasuwebApp',['myFilters'])
 
     /*** Init Stuff ***/
 
-  	$scope.loadData();
+  	//$scope.loadData();
 
   });
