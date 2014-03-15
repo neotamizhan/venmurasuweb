@@ -37,6 +37,7 @@ angular.module('venmurasuwebApp', [
       });
 
       $locationProvider.html5Mode(true);
+      $locationProvider.hashPrefix('!');
   })
 
   .service('Helper', function () {
