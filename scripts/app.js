@@ -36,7 +36,7 @@ angular.module('venmurasuwebApp', [
         redirectTo: '/'
       });
 
-      //$locationProvider.html5Mode(true);
+      $locationProvider.html5Mode(true);
   })
 
   .service('Helper', function () {
