@@ -37,7 +37,7 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
       // go to /latest
       console.log('path is ' + $location.path());
       if ($location.path() == "/")
-        $location.path('latest');
+        $location.path('/latest');
       else 
         console.log('returning to original path ' + $location.path());
      // $scope.$apply();
