@@ -18,7 +18,6 @@ angular.module('venmurasuwebApp', [
       .when('/novel/:novel', {
         templateUrl: 'views/episodes.html',
         controller: 'NovelController'
-        //controller: 'MainCtrl'
       })
       .when('/novel/:novel/section/:section', {
         templateUrl: 'views/episodes.html',
