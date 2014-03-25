@@ -138,11 +138,12 @@ function LatestEpisodeController ($scope, EpisodeService) {
     $scope.loadData();
     $scope.apply();
   }
-  
+
   var e = [];      
   e.push($scope.db[$scope.db.length - 1]);         
+  console.log(e);
   $scope.episodes = e;
-  $scope.message = $scope.episodes[0].published_on + " தேதியிட்ட புதிய அத்தியாயம்."
+  //$scope.message = $scope.episodes[0].published_on + " தேதியிட்ட புதிய அத்தியாயம்."
 }
 
 function SectionController ($scope, $routeParams, Helper, EpisodeService) {
