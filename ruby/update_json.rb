@@ -2,29 +2,64 @@ require "json"
 require "date"
 require "rss"
 
-def get_next_url(last_date)
-	next_date = last_date + 1
-	"http://www.venmurasu.in/#{next_date.year}/#{next_date.month.to_s.rjust(2,'0')}/#{next_date.day}/feed"
-end
 
-data = JSON.parse(File.read("../data.json",:encoding => 'utf-8'))
+class Struct
+  def to_map
+    map = Hash.new
+    self.members.each { |m| map[m] = self[m] }
+    map
+  end
 
-last_data = data[-1]
-
-last_date = Date.strptime(last_data['published_on'],'%d-%m-%Y')
-
-next_date = last_date + 1
-
-p last_date
-url = get_next_url(last_date)
-
-open(url) do |rss|
-  feed = RSS::Parser.parse(rss)
-  puts "Title: #{feed.channel.title}"
-  feed.items.each do |item|
-    puts "Item: #{item.link}"
+  def to_json(*a)
+    to_map.to_json(*a)
   end
 end
+
+class EpisodeEntry < Struct.new(:novelno, :novelname, :sectionno, :sectionname, :chapter, :published_on, :url, :image, :tags); end
+
+class EpisodeUpdater
+
+	attr_accessor :jsonData
+
+	def initialize
+		@jsonData = JSON.parse(File.read("../data.json",:encoding => 'utf-8'))
+	end
+
+	def get_next_url(last_date)
+		next_date = last_date + 1
+		"http://www.venmurasu.in/#{next_date.year}/#{next_date.month.to_s.rjust(2,'0')}/#{next_date.day}/feed"
+	end
+
+	def get_last_episode_date
+		last_episode = @jsonData[-1]
+		last_date = Date.strptime(last_episode['published_on'],'%d-%m-%Y')
+
+		last_date
+	end
+
+	def fetch_next_episode
+		next_episode = EpisodeEntry.new
+
+
+		url = get_next_url(get_last_episode_date)
+		p url
+		open(url) do |rss|
+		  feed = RSS::Parser.parse(rss)
+		  puts "Title: #{feed.channel.title}"
+
+		  feed.items.each do |item|
+		    puts "Item: #{item.link}"
+		  end
+		end
+	end
+
+end
+
+next_epi = EpisodeEntry.new(2,"மழைப்பாடல்",6,"தூரத்துச் சூரியன்", 27, "22-03-2014","http://venmurasu.in/2014/03/22/%e0%ae%a8%e0%af%82%e0%ae%b2%e0%af%8d-%e0%ae%87%e0%ae%b0%e0%ae%a3%e0%af%8d%e0%ae%9f%e0%af%81-%e0%ae%ae%e0%ae%b4%e0%af%88%e0%ae%aa%e0%af%8d%e0%ae%aa%e0%ae%be%e0%ae%9f%e0%ae%b2%e0%af%8d-27/", "http://www.jeyamohan.in/wp-content/uploads/2014/03/VENMURASU_EPI_77_-.jpg", [])
+
+#puts JSON.pretty_generate(next_epi)
+
+EpisodeUpdater.new.fetch_next_episode
 
 __END__
 
