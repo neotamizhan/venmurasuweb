@@ -4,28 +4,28 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
 
     /****** Init Stuff ***/
     $scope.initialized = false;
-  	$scope.db = [];
-  	$scope.episodes = EpisodeService.Episodes; //Data.getEpisodes();
+    $scope.db = [];
+    $scope.episodes = EpisodeService.Episodes; //Data.getEpisodes();
 
-  	$scope.sections = [];
-  	$scope.novels = [];
+    $scope.sections = [];
+    $scope.novels = [];
     $scope.novelsWithSections = [];
     $scope.allTags = [];
     $scope.tagCount = [];
 
-  	$scope.message = "";
+    $scope.message = "";
 
     $scope.url = "";
 
 
-  	$scope.loadData = function () {
-  		var url = 'data.json?nocache=' + Math.random();
-  		$http.get(url).then(function (response) { 
+    $scope.loadData = function () {
+      var url = 'data.json?nocache=' + Math.random();
+      $http.get(url).then(function (response) { 
         $scope.db = response.data; 
         
         initialize();
       });
-  	};
+    };
 
     var initialize = function () {
       console.log('initialized');
@@ -96,32 +96,32 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
       };      
     }    
 
-  	$scope.fetchSections = function (novel) {
-  		$scope.sections = Helper.getSections($scope.db, novel);		        
-  	};
+    $scope.fetchSections = function (novel) {
+      $scope.sections = Helper.getSections($scope.db, novel);           
+    };
 
 
-  	$scope.fetchEpisodes = function (section) {
-  		$scope.episodes = getEpisodes(section);
+    $scope.fetchEpisodes = function (section) {
+      $scope.episodes = getEpisodes(section);
       $scope.message = section.name + " பகுதியின் அத்தியாயங்கள். எண்ணிக்கை : " + $scope.episodes.length;
-  	}
+    }
 
-  	$scope.fetchAllEpisodes = function (novel) {
-  		$scope.episodes = getAllEpisodes(novel);
+    $scope.fetchAllEpisodes = function (novel) {
+      $scope.episodes = getAllEpisodes(novel);
       $scope.message = novel.name + " நாவலின் அனைத்து அத்தியாயங்களும். எண்ணிக்கை : " + $scope.episodes.length;
-  	}
+    }
 
-  	$scope.orderEpisodes = function (order) {
-  		if (order == 'd') {
-  			$scope.episodes = Enumerable.from($scope.episodes)
-	  						  .orderByDescending("$.chapter")
-	  						  .toArray();  	
-  		} else {
-  			$scope.episodes = Enumerable.from($scope.episodes)
-	  						  .orderBy("$.chapter")
-	  						  .toArray();  	  			
-  		}
-  	}
+    $scope.orderEpisodes = function (order) {
+      if (order == 'd') {
+        $scope.episodes = Enumerable.from($scope.episodes)
+                  .orderByDescending("$.chapter")
+                  .toArray();   
+      } else {
+        $scope.episodes = Enumerable.from($scope.episodes)
+                  .orderBy("$.chapter")
+                  .toArray();           
+      }
+    }
 
 
 
@@ -129,7 +129,7 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
 
     /*** Init Stuff ***/
 
-  	//$scope.loadData();   
+    //$scope.loadData();   
   };
 
 
