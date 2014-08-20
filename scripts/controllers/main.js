@@ -19,7 +19,7 @@ function MainCtrl ($scope, $http, Helper, EpisodeService, $location) {
 
 
   	$scope.loadData = function () {
-  		var url = 'data.json?nocache=' + Math.random();
+  		var url = 'https://s3.amazonaws.com/venmurasu/data.json?nocache=' + Math.random();
   		$http.get(url).then(function (response) { 
         $scope.db = response.data; 
         
